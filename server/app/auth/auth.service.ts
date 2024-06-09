@@ -12,8 +12,8 @@ const authService = {
     const session = await lucia.createSession(user.id, {});
 
     if (platform === "web") {
-      const sessionCookie = lucia.createSessionCookie(session.id);
-      ctx.res.headers.set("set-cookie", sessionCookie.serialize());
+      const cookie = lucia.createSessionCookie(session.id);
+      ctx.setCookie(cookie.name, cookie.value);
       return { ...session, id: undefined };
     }
 

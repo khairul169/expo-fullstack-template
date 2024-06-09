@@ -8,7 +8,8 @@
     "migrate": "bun run db/migrate.ts",
     "db:push": "drizzle-kit push",
     "db:seed": "bun run db/seed.ts",
-    "reset": "bun run db:push && bun run db:seed"
+    "reset": "bun run db:push && bun run db:seed",
+    "trpc:generate": "tsc -p tsconfig.trpc.json"
   },
   "devDependencies": {
     "@types/bun": "latest",

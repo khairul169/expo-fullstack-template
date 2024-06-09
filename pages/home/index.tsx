@@ -4,7 +4,7 @@ import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import { Stack } from "expo-router";
 import { ThemeToggle } from "~/components/containers/theme-toggle";
-import trpc from "~/lib/trpc";
+import trpc, { TRPCOutput } from "~/lib/trpc";
 import { useLogout } from "~/stores/authStore";
 
 const HomePage = () => {

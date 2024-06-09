@@ -1,7 +1,7 @@
 import { TRPCError, initTRPC } from "@trpc/server";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import type { Context } from "hono";
-import { getCookie } from "hono/cookie";
+import { getCookie, setCookie } from "hono/cookie";
 import lucia from "./lib/lucia";
 
 async function getAuthedUser(c: Context) {
@@ -24,7 +24,16 @@ export async function createContext(
 ) {
   const { user, session } = await getAuthedUser(c);
 
-  return { req: c.req, res: c.res, user, session };
+  return {
+    user,
+    sessionId: session?.id,
+    getHeader(name: string) {
+      return c.req.header(name);
+    },
+    setCookie(name: string, value: string) {
+      setCookie(c, name, value);
+    },
+  };
 }
 
 export type TRPCContext = Awaited<ReturnType<typeof createContext>>;
@@ -35,9 +44,9 @@ export const router = t.router;
 
 export const publicProcedure = t.procedure;
 export const procedure = t.procedure.use(({ ctx, next }) => {
-  if (!ctx.user || !ctx.session?.id) {
+  if (!ctx.user || !ctx.sessionId) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "Not authenticated" });
   }
 
-  return next({ ctx: { ...ctx, user: ctx.user!, session: ctx.session! } });
+  return next({ ctx: { user: ctx.user!, sessionId: ctx.sessionId! } });
 });

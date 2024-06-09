@@ -5,7 +5,7 @@ import {
 } from "@trpc/react-query";
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import { QueryClient } from "@tanstack/react-query";
-import type { AppRouter } from "../server/app/router";
+import type { AppRouter } from "server/app/router";
 import { API_URL } from "./api";
 import { authStore, logout } from "~/stores/authStore";
 

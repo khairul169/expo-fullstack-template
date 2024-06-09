@@ -4,10 +4,10 @@ import { procedure } from "../../trpc";
 
 export const logout = procedure.mutation(async ({ ctx }) => {
   try {
-    await lucia.invalidateSession(ctx.session.id);
+    await lucia.invalidateSession(ctx.sessionId);
 
-    const sessionCookie = lucia.createBlankSessionCookie();
-    ctx.res.headers.set("set-cookie", sessionCookie.serialize());
+    const cookie = lucia.createBlankSessionCookie();
+    ctx.setCookie(cookie.name, cookie.value);
 
     return true;
   } catch (err) {
