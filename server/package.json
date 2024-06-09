@@ -3,18 +3,30 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "bun --watch run index.ts"
+    "dev": "bun --watch run index.ts",
+    "generate": "drizzle-kit generate",
+    "migrate": "bun run db/migrate.ts",
+    "db:push": "drizzle-kit push",
+    "db:seed": "bun run db/seed.ts",
+    "reset": "bun run db:push && bun run db:seed"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "better-sqlite3": "^11.0.0",
+    "drizzle-kit": "^0.22.6"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
     "@hono/trpc-server": "^0.3.1",
+    "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@trpc/server": "^10.45.2",
+    "dayjs": "^1.11.11",
+    "drizzle-orm": "^0.31.2",
     "hono": "^4.4.4",
+    "lucia": "^3.2.0",
+    "nanoid": "^5.0.7",
     "zod": "^3.23.8"
   }
 }

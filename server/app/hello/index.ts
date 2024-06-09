@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { publicProcedure } from "../../trpc";
+import { procedure } from "../../trpc";
 
-export const hello = publicProcedure
+export const hello = procedure
   .input(z.string().nullish())
-  .query(({ input }) => {
-    return `Hello ${input ?? "World"}!`;
+  .query(({ input, ctx }) => {
+    return `Hello ${input ?? "World"}! User: ${ctx.user.username}`;
   });

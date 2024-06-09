@@ -7,7 +7,9 @@ import "~/global.css";
 export default function RootLayout() {
   return (
     <Providers>
-      <Stack />
+      <Stack>
+        <Stack.Screen name="(main)" options={{ headerShown: false }} />
+      </Stack>
     </Providers>
   );
 }
